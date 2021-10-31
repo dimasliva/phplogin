@@ -1,6 +1,11 @@
 <?php
 if (isset($_POST['submit'])) {
-    print_r($_POST);
+    $username = $_POST['username'];
+    $pwd = $_POST['pwd'];
+    require_once "./db.php";
+    require_once "functions.php";
+    if (empty($username) || empty($pwd) !== false) {
+    }
 } else {
     header('location: ../signup.php');
 }

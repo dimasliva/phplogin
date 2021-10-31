@@ -5,31 +5,38 @@ if (isset($_POST['submit'])) {
     $uid = $_POST['username'];
     $pwd = $_POST['pwd'];
     $pwdrepeat = $_POST['pwdrepeat'];
-
     require_once "./db.php";
-    require_once "functions.php";
-    if (emptyInput($name, $email, $pwd, $pwdrepeat) !== false) {
-        header('location: signup.php?error=emptyinput');
+    require_once "./functions.php";
+    if (emptyInput($name, $uid, $email, $pwd, $pwdrepeat) !== false) {
+        header('location: ../signup.php?error=emptyinput');
         exit();
     }
-    if (invalidUid($name) !== false) {
-        header('location: signup.php?error=emptyuid');
+    if (emptyName($name) !== false) {
+        header('location: ../signup.php?error=emptyname');
+        exit();
+    }
+    if (invalidUid($uid) !== false) {
+        header('location: ../signup.php?error=emptyuid');
         exit();
     }
     if (invalidEmail($email) !== false) {
-        header('location: signup.php?error=emptyemail');
+        header('location: ../signup.php?error=emptyemail');
         exit();
     }
-    if (invalidEmail($email) !== false) {
-        header('location: signup.php?error=invalidemail');
+    if (emptyPwd($pwd) !== false) {
+        header('location: ../signup.php?error=emptypwd');
         exit();
     }
     if (pwdMatch($pwd, $pwdrepeat) !== false) {
-        header('location: signup.php?error=pwdmatch');
+        header('location: ../signup.php?error=pwdmatch');
         exit();
     }
-    if (uidExists($conn, $uid, $email) !== false) {
-        header('location: signup.php?error=usernametaken');
+    if (uidExists($conn, $uid) !== false) {
+        header('location: ../signup.php?error=usernametaken');
+        exit();
+    }
+    if (emailExists($conn, $email) !== false) {
+        header('location: ../signup.php?error=emailtaken');
         exit();
     }
     createUser($conn, $name, $email, $uid, $pwd);

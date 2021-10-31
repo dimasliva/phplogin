@@ -23,23 +23,39 @@
 									<p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 									<!-- Error -->
 									<?php
-									if ($_GET['error']) {
+									if (isset($_GET['error'])) {
 										if ($_GET['error'] == "emptyinput") {
 											echo "<p style='background:red; color:white; padding: 10px; border-radius: 10px'>Fields are empty</p>";
-										} else if ($_GET['error'] == 'invaliduid') {
+										}	// Empty uid 
+										else if ($_GET['error'] == 'emptyuid') {
 											echo "<p style='background:red; color:white; padding: 10px; border-radius: 10px'>Choose a proper username!</p>";
-										} else if ($_GET['error'] == 'invalidemail') {
+										} // Empty name 
+										else if ($_GET['error'] == 'emptyname') {
+											echo "<p style='background:red; color:white; padding: 10px; border-radius: 10px'>Choose a proper name!</p>";
+										}	// Empty email 
+										else if ($_GET['error'] == 'emptyemail') {
 											echo "<p style='background:red; color:white; padding: 10px; border-radius: 10px'>Choose a proper email!</p>";
-										} else if ($_GET['error'] == 'pwdmatch') {
+										}	// Empty pwd 
+										else if ($_GET['error'] == 'emptypwd') {
+											echo "<p style='background:red; color:white; padding: 10px; border-radius: 10px'>Choose a proper password!</p>";
+										}	// Pwd not match 
+										else if ($_GET['error'] == 'pwdmatch') {
 											echo "<p style='background:red; color:white; padding: 10px; border-radius: 10px'>Password doesn't match!</p>";
-										} else if ($_GET['error'] == 'usernametaken') {
+										}	// Username taken 
+										else if ($_GET['error'] == 'usernametaken') {
 											echo "<p style='background:red; color:white; padding: 10px; border-radius: 10px'>Username already exists!</p>";
-										} else if ($_GET['error'] == 'stmtfailed') {
-											echo "<p style='background:red; color:white; padding: 10px; border-radius: 10px'>Something went wrong, try again!</p>";
-										} else if ($_GET['error'] == 'none') {
-											echo "<p style='background:red; color:white; padding: 10px; border-radius: 10px'>You have signed up!</p>";
+										}	// Email taken
+										else if ($_GET['error'] == 'emailtaken') {
+											echo "<p style='background:red; color:white; padding: 10px; border-radius: 10px'>Email already exists!</p>";
 										}
-									};
+										// Something wrong 
+										else if ($_GET['error'] == 'stmtfailed') {
+											echo "<p style='background:red; color:white; padding: 10px; border-radius: 10px'>Something went wrong, try again!</p>";
+										} // Success 
+										else if ($_GET['error'] == 'none') {
+											echo "<p style='background:#2EBC3B; color:white; padding: 10px; border-radius: 10px'>You have successfully signed up!</p>";
+										}
+									}
 									?>
 									<!-- Form -->
 									<form class="mx-1 mx-md-4" method="POST" action="./includes/signup.php">
