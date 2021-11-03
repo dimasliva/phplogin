@@ -7,7 +7,7 @@
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark px-4">
     <!-- Brand -->
-    <a class="navbar-brand" href="<?php echo URLROOT; ?>/index.php">DmitryPHP</a>
+    <a class="navbar-brand" href="/login/index.php">DmitryPHP</a>
 
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -18,13 +18,13 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link home" href="<?php echo URLROOT;; ?>/index.php">Home</a>
+                <a class="nav-link home" href="./login/index.php">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo URLROOT; ?>/pages/signup.php">Sign up</a>
+                <a class="nav-link" href="/login/pages/signup.php">Sign up</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link signin" href="<?php echo URLROOT; ?>/pages/signin.php">Sign in</a>
+                <a class="nav-link signin" href="/login/pages/signin.php">Sign in</a>
             </li>
         </ul>
     </div>

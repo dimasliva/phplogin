@@ -1,6 +1,7 @@
 <?php
-require_once "./config/config.php";
-require_once APPROOT . "./config/require.php";
+
+
+require_once "./app/config/config.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,8 +14,26 @@ require_once APPROOT . "./config/require.php";
 </head>
 
 <body>
-	<?php require APPROOT . "./include/navbar.php" ?>
-	<?php require APPROOT . "./pages/home.php" ?>
+	<?php
+
+	// require_once APPPUBLIC . "/include/navbar.php";
+	// require_once APPPUBLIC . "/pages/home.php"; 
+
+	require_once 'app/lib/Dev.php';
+
+	use app\core\Router;
+
+	spl_autoload_register(function ($class) {
+		$path = str_replace("\\", "/", $class . '.php');
+		if (file_exists($path)) {
+			require $path;
+		}
+	});
+	session_start();
+	$router = new Router;
+
+	?>
+
 </body>
 
 </html>
