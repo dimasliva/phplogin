@@ -31,7 +31,7 @@ require_once "./app/config/config.php";
 	});
 	session_start();
 	$router = new Router;
-
+	$router->run();
 	?>
 
 </body>
