@@ -12,10 +12,10 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <?php include_once APPPUBLIC . "/include/card.php" ?>
+            <?php include_once "./public/include/card.php" ?>
         </div>
     </div>
 </section>
 <?php
-include_once APPPUBLIC . "/include/footer.php";
+include_once "./public/include/footer.php";
 ?>

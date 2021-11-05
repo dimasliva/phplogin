@@ -1,7 +1,6 @@
 <?php
 
 
-require_once "./app/config/config.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +14,8 @@ require_once "./app/config/config.php";
 
 <body>
 	<?php
-	include_once APPPUBLIC . '/pages/home.php';
+	include_once './public/include/navbar.php';
+	include_once './public/pages/home.php';
 
 	?>
 
