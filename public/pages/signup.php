@@ -23,7 +23,7 @@
 					<div class="card-body p-4 p-sm-5">
 						<h5 class="card-title text-center mb-5 fw-light fs-5">Sign Up</h5>
 						<?php flash("register") ?>
-						<form method="POST" action="../../app/controllers/Users.php">
+						<form method="POST" action="../../app/controllers/Users.php" novalidate>
 							<div class="form-floating mb-3">
 								<input type="hidden" name="type" value="register">
 								<input type="name" name="usersName" class="form-control" id="floatingusersName" placeholder="Password">
@@ -55,7 +55,7 @@
 								</label>
 							</div>
 							<div class="d-grid">
-								<button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" name="submit">Signup</button>
+								<button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" name="submit">Sign up</button>
 							</div>
 							<hr class="my-4">
 							<div class="d-grid mb-2">

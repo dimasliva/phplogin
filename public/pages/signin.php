@@ -11,7 +11,10 @@
 </head>
 
 <body>
-	<?php require "../include/navbar.php" ?>
+	<?php
+	require_once "../../app/helpers/session_helper.php";
+	include_once "../include/navbar.php"
+	?>
 
 
 	<div class="container">
@@ -20,17 +23,19 @@
 				<div class="card border-0 shadow rounded-3 my-5">
 					<div class="card-body p-4 p-sm-5">
 						<h5 class="card-title text-center mb-5 fw-light fs-5">Sign In</h5>
-						<form>
+						<?php flash('login') ?>
+						<form method="POST" action="../../app/controllers/Users.php" novalidate>
 							<div class="form-floating mb-3">
-								<input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-								<label for="floatingInput">Email address</label>
+								<input type="hidden" name="type" value="login">
+								<input type="text" name="name/email" class="form-control" id="floatingInput" placeholder="Username or Email">
+								<label for="floatingInput">Username or Email</label>
 							</div>
 
 							<div class="form-floating mb-3">
-								<input type="password" name="pwd" class="form-control" id="floatingPassword" placeholder="Password">
+								<input type="password" name="usersPwd" class="form-control" id="floatingPassword" placeholder="Password">
 								<label for="floatingPassword">Password</label>
 							</div>
-
+							<!-- Remember pwd -->
 							<div class="form-check mb-3">
 								<input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
 								<label class="form-check-label" for="rememberPasswordCheck">
@@ -38,8 +43,7 @@
 								</label>
 							</div>
 							<div class="d-grid">
-								<button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Sign
-									in</button>
+								<button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" name="submit">Sign in</button>
 							</div>
 							<hr class="my-4">
 							<div class="d-grid mb-2">
