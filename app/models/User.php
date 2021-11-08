@@ -44,4 +44,17 @@ class User
             return false;
         }
     }
+
+    public function login($nameOrEmail, $password)
+    {
+        $row = $this->findUserByEmailOrUsername($nameOrEmail, $nameOrEmail);
+        if ($row == false) return false;
+
+        $hashPwd = $row->usersPwd;
+        if (password_verify($password, $hashPwd)) {
+            return $row;
+        } else {
+            return false;
+        }
+    }
 }

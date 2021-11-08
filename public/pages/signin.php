@@ -12,8 +12,10 @@
 
 <body>
 	<?php
-	require_once "../../app/helpers/session_helper.php";
-	include_once "../include/navbar.php"
+	if (!isset($_SESSION)) {
+		include "../../app/helpers/session_helper.php";
+	} else
+		include_once "../include/navbar.php"
 	?>
 
 
@@ -36,12 +38,11 @@
 								<label for="floatingPassword">Password</label>
 							</div>
 							<!-- Remember pwd -->
-							<div class="form-check mb-3">
-								<input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-								<label class="form-check-label" for="rememberPasswordCheck">
-									Remember password
-								</label>
+
+							<div class="w-50 my-3 text-md-right">
+								<a href="/mvc/public/pages/rest-password.php" style="text-decoration:none">Forgot Password</a>
 							</div>
+							<!-- Button sign in -->
 							<div class="d-grid">
 								<button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" name="submit">Sign in</button>
 							</div>

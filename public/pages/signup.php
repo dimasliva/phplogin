@@ -12,8 +12,10 @@
 
 <body>
 	<?php
-	require_once "../../app/helpers/session_helper.php";
-	include_once "../include/navbar.php";
+	if (!isset($_SESSION)) {
+		include "../../app/helpers/session_helper.php";
+	} else
+		include_once "../include/navbar.php"
 	?>
 
 	<div class="container">

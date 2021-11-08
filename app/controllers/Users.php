@@ -75,7 +75,38 @@ class Users
         if (empty($data['name/email']) || empty($data['usersPwd'])) {
             flash('login', 'Please fill out all inputs');
             redirect("/mvc/public/pages/signin.php");
+            exit();
         }
+
+        if ($this->userModel->findUserByEmailOrUsername($data['name/email'], $data['name/email'])) {
+            $loggedInUser = $this->userModel->login($data['name/email'], $data['usersPwd']);
+            if ($loggedInUser) {
+                $this->createUserSession($loggedInUser);
+            } else {
+                flash('login', 'Password Incorrect');
+                redirect("/mvc/public/pages/signin.php");
+            }
+        } else {
+            flash('login', 'No user found');
+            redirect("/mvc/public/pages/signin.php");
+        }
+    }
+
+    public function createUserSession($user)
+    {
+        $_SESSION['usersId'] = $user->usersId;
+        $_SESSION['usersUid'] = $user->usersUid;
+        $_SESSION['usersEmail'] = $user->usersEmail;
+        redirect("/mvc/index.php");
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['usersId']);
+        unset($_SESSION['usersUid']);
+        unset($_SESSION['usersEmail']);
+        session_destroy();
+        redirect("/mvc/index.php");
     }
 }
 
@@ -88,5 +119,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         case 'login':
             $init->login();
             break;
+        default:
+            redirect('/mvc/index.php');
+    }
+} else {
+    switch ($_GET['q']) {
+        case 'logout':
+            $init->logout();
+            break;
+        default:
+            redirect('/mvc/index.php');
     }
 }
