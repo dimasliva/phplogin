@@ -1,7 +1,5 @@
 <?php
 
-use app\lib\Database;
-
 require_once '../lib/Database.php';
 
 class User

@@ -25,12 +25,13 @@
                 <div class="card border-0 shadow rounded-3 my-5">
                     <div class="card-body p-4 p-sm-5">
                         <h5 class="card-title text-center mb-5 fw-light fs-5">Rest password</h5>
-                        <?php flash('login') ?>
-                        <form method="POST" action="../../app/controllers/Users.php" novalidate>
+                        <?php flash('rest') ?>
+                        <!-- Form -->
+                        <form method="POST" action="../../app/controllers/ResetPasswords.php" novalidate>
 
                             <div class="form-floating mb-3">
-                                <input type="hidden" name="type" value="login">
-                                <input type="text" name="name/email" class="form-control" id="floatingInput" placeholder="Email">
+                                <input type="hidden" name="type" value="send">
+                                <input type="email" name="usersEmail" class="form-control" id="floatingInput" placeholder="Email">
                                 <label for="floatingInput">Email</label>
                             </div>
 
