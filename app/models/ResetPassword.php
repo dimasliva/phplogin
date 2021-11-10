@@ -22,7 +22,7 @@ class ResetPassword
         }
     }
 
-    public function insetToken($email, $selector, $token, $expires)
+    public function insertToken($email, $selector, $token, $expires)
     {
         $this->db->query("INSERT INTO pwdreset
             (pwdResetEmail, pwdResetSelector, pwdResetToken, pwdResetExpires)
@@ -34,6 +34,20 @@ class ResetPassword
 
         if ($this->db->execute()) {
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function resetPassword($selector, $currentDate)
+    {
+        $this->db->query("SELECT * FROM pwdreset WHERE 
+                        pwdResetSelector = :selector AND pwdResetExpires >= :currentDate");
+        $this->db->bind(':selector', $selector);
+        $this->db->bind(':currentDate', $currentDate);
+        $row = $this->db->single();
+        if ($this->db->rowCount() > 0) {
+            return $row;
         } else {
             return false;
         }

@@ -55,8 +55,8 @@ class ResetPasswords
             die("There was an error");
         }
 
-        $hashToken = password_hash($token, PASSWORD_DEFAULT);
-        if (!$this->resetModel->insetToken($usersEmail, $selector, $token, $expires)) {
+        $hashedToken = password_hash($token, PASSWORD_DEFAULT);
+        if (!$this->resetModel->insertToken($usersEmail, $selector, $hashedToken, $expires)) {
             die("There was an error");
         }
 
@@ -72,8 +72,64 @@ class ResetPasswords
 
         $this->mail->send();
 
-        flash("rest", "Check your email", "alert alert-success");
+        flash("reset", "Check your email", "alert alert-success");
         redirect("/mvc/public/pages/rest-password.php");
+    }
+
+    public function resetPassword()
+    {
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $data = [
+            "selector" => trim($_POST['selector']),
+            "validator" => trim($_POST['validator']),
+            "pwd" => trim($_POST['pwd']),
+            "pwd-repeat" => trim($_POST['pwd-repeat']),
+        ];
+        $url = '/mvc/public/pages/create-new-password.php?selector=' . $data['selector'] . '&validator=' . $data['validator'];
+        if (empty($_POST['pwd']) || empty($_POST['pwd-repeat'])) {
+            flash('newReset', 'Please fill out all fields');
+            redirect($url);
+        } else if ($data['pwd'] !== $data['pwd-repeat']) {
+            flash('newReset', 'Passwords do not match');
+            redirect($url);
+        } else if (strlen($data['pwd']) < 6) {
+            flash('newReset', 'Invalid password');
+            redirect($url);
+        }
+
+        $currentDate = date("U");
+
+        if (!$row = $this->resetModel->resetPassword($data['selector'], $currentDate)) {
+            flash('newReset', 'Sorry. The link is no longer valid');
+            redirect($url);
+        }
+
+        $tokenBin = hex2bin($data['validator']);
+        $tokenCheck = password_verify($tokenBin, $row->pwdResetToken);
+        if (!$tokenCheck) {
+            flash('newReset', 'data: ' . $data['validator'] . '\n' . $tokenBin);
+            redirect($url);
+        }
+
+        $tokenEmail = $row->pwdResetEmail;
+        if (!$this->userModel->findUserByEmailOrUsername($tokenEmail, $tokenEmail)) {
+            flash('newReset', 'There was an error');
+            redirect($url);
+        }
+
+        $newPwdHash = password_hash($data['pwd'], PASSWORD_DEFAULT);
+        if (!$this->userModel->resetPassword($newPwdHash, $tokenEmail)) {
+            flash('newReset', 'There was an error');
+            redirect($url);
+        }
+
+        if (!$this->resetModel->deleteEmail($tokenEmail)) {
+            flash('newReset', 'There was an error');
+            redirect($url);
+        }
+
+        flash('newReset', 'Password updated!', 'alert alert-success');
+        redirect($url);
     }
 }
 
@@ -82,6 +138,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     switch ($_POST['type']) {
         case 'send':
             $init->sendMail();
+            break;
+        case 'reset':
+            $init->resetPassword();
+            break;
+        default:
+            redirect("/mvc/index.php");
             break;
     }
 } else {

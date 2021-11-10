@@ -55,4 +55,17 @@ class User
             return false;
         }
     }
+
+    public function resetPassword($newPwd, $tokenEmail)
+    {
+        $this->db->query('UPDATE users SET usersPwd = :newPwd WHERE usersEmail = :tokenEmail');
+        $this->db->bind(':newPwd', $newPwd);
+        $this->db->bind(':tokenEmail', $tokenEmail);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
